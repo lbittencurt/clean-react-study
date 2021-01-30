@@ -26,14 +26,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        repo-token: ${{ github.token }}
-        repository: ${{ github.repository }}
-        github-token: ${{ github.token }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - run: npm install
     - run: npx eslint 'src/**'
     - run: npm run test:coveralls
     
-    - name: Publish to coveralls.io
+    - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@v1.1.2
       with:
-        github-token: ${{ github.token }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
