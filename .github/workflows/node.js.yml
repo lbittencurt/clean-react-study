@@ -11,14 +11,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-        # node-version: [10.x, 12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v2
@@ -26,18 +22,15 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14
     
     - name: Install dependencies
       run: npm install
     
     - name: Test
       run: npm run test:coveralls
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
     
     #- run: npx eslint 'src/**'
     - name: Publish to Coveralls
       uses: coverallsapp/github-action@v1.1.2
-      with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
