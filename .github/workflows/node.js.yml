@@ -7,7 +7,7 @@ on: ['push', 'pull_request']
 
 jobs:
   code:
-    name: Test code
+    name: Build, linter and test
     runs-on: ubuntu-latest
 
     env:
@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
 
+      - name: Run linter
+        run: npx eslint 'src/**'
+
       - name: Run Jest
         run: npm run test:ci
 
@@ -34,5 +37,3 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-    #- run: npx eslint 'src/**'
-
