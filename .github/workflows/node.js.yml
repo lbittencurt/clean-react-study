@@ -28,9 +28,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npx eslint 'src/**'
-    - run: npm run test:coveralls
     
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: npm run test:coveralls
