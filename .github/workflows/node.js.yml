@@ -31,7 +31,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - run: npm install
     - run: npx eslint 'src/**'
-    - run: npm run te st:coveralls
+    - run: npm run test:coveralls
     
     - name: Coveralls
       uses: coverallsapp/github-action@master
