@@ -5,7 +5,14 @@ import {
   HttpStatusCode
 } from '../protocols/http'
 
-export class HttpPostClientSpy<T, R> implements HttpPostClient<T,R> {
+import faker from 'faker'
+
+export const mockPostRequest = (): HttpPostParams<any> => ({
+  url: faker.internet.url(),
+  body: faker.random.objectElement()
+})
+
+export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
   url?: string
   body?: T
   response: HttpResponse<R> = {
