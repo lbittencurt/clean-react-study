@@ -39,12 +39,15 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
     })
   }, [state.name, state.email])
 
-  const submitButtonIsDisabled = (): boolean => {
-    return !!state.nameError || !!state.emailError || !!state.passwordError || !!state.passwordConfirmationError
+  const doesFormContainsErrors = (): boolean => {
+    return !!state.emailError || !!state.passwordError || !!state.nameError || !!state.passwordConfirmationError
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
+    if (state.isLoading || doesFormContainsErrors()) {
+      return
+    }
     setState({
       ...state,
       isLoading: true
@@ -69,7 +72,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
           <Input type="password" name="passwordConfirmation" placeholder="Repita a sua senha"/>
           <button
             data-testid='submit'
-            disabled={ submitButtonIsDisabled() }
+            disabled={ doesFormContainsErrors() }
             className={Styles.submit} type="submit"
           >Criar conta</button>
           <span
