@@ -42,15 +42,6 @@ const makeSut = (params?: SutParams): SutTypes => {
     saveAccessTokenMock
   }
 }
-// const populateEmailField = (sut: RenderResult, email = faker.internet.email()): void => {
-//   const emailInput = sut.getByTestId('email')
-//   fireEvent.input(emailInput, { target: { value: email } })
-// }
-
-// const populatePasswordField = (sut: RenderResult, password = faker.internet.password()): void => {
-//   const passwordInput = sut.getByTestId('password')
-//   fireEvent.input(passwordInput, { target: { value: password } })
-// }
 
 const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
   Helper.populateField(sut, 'email', email)
@@ -143,7 +134,7 @@ describe('Login Component', () => {
     const { sut, authenticationSpy } = makeSut()
     const error = new InvalidCredentialsError()
 
-    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
+    jest.spyOn(authenticationSpy, 'auth').mockRejectedValue(error)
 
     await simulateValidSubmit(sut)
 
